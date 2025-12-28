@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { NewNote, NoteTag } from "../../types/note";
 import { createNote } from "@/lib/api";
 import { useRouter } from "next/navigation";
-import { useNoteDraftStore } from "@/store/noteStore";
+import { useNoteDraftStore } from "@/lib/store/noteStore";
 
 // interface NoteFormProps {
 //   onSuccess: () => void;
