@@ -14,10 +14,10 @@ import { useDebounce } from "use-debounce";
 import Link from "next/link";
 
 interface NoteClientProps {
-  category: string | undefined;
+  tag: string | undefined;
 }
 
-function NoteClient({ category }: NoteClientProps) {
+function NoteClient({ tag }: NoteClientProps) {
   const [page, setPage] = useState(1);
   // const [isModalOpen, setIsModalOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -29,8 +29,8 @@ function NoteClient({ category }: NoteClientProps) {
   }
 
   const { data, isLoading } = useQuery<FetchNotesResponse>({
-    queryKey: ["notes", category, page, debouncedSearch],
-    queryFn: () => fetchNotes({ search: debouncedSearch, page, tag: category }),
+    queryKey: ["notes", tag, page, debouncedSearch],
+    queryFn: () => fetchNotes({ search: debouncedSearch, page, tag }),
     placeholderData: keepPreviousData,
   });
 
@@ -63,11 +63,9 @@ function NoteClient({ category }: NoteClientProps) {
         </Modal>
       )} */}
 
-      {notes.length > 0 && !isLoading ? (
-        <NoteList notes={notes} />
-      ) : (
-        <p>No notes found</p>
-      )}
+      {isLoading && <p>Loading....</p>}
+      {!isLoading && notes.length > 0 && <NoteList notes={notes} />}
+      {!isLoading && notes.length === 0 && <p>No notes found</p>}
 
       {totalPages > 1 && (
         <Pagination
